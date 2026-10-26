@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KULTURA — Організація та просування культурних заходів</title>
+    <style>
+        :root {
+            --bg-dark: #0d0d11;
+            --bg-card: #16161f;
+            --accent: #ff3b30;
+            --accent-glow: rgba(255, 59, 48, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --border: #27272a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Навігація */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(13, 13, 17, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--text-main);
+        }
+
+        .nav-btn {
+            background: var(--accent);
+            color: white;
+            padding: 0.6rem 1.25rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        /* Геро-секція */
+        .hero {
+            padding: 10rem 2rem 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(to right, #ffffff, #888888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        /* Послуги / Що ми робимо */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .services {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #3f3f46;
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Афіша подій */
+        .events {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #27272a;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .event-meta {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .event-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .event-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .event-location {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .ticket-btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .ticket-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Контакти / Заявка */
+        .cta {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #111116 100%);
+            border-top: 1px solid var(--border);
+        }
+
+        .cta-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta p {
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0.75rem 1rem;
+            color: white;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .submit-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        /* Модальне вікно успіху */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 3rem;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-content h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .close-modal {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Футер */
+        footer {
+            background: var(--bg-dark);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Адаптивність */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навігація -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">Kult<span>ura</span></a>
+            <ul class="nav-menu">
+                <li><a href="#services">Послуги</a></li>
+                <li><a href="#events">Події</a></li>
+                <li><a href="#contact">Контакти</a></li>
+            </ul>
+            <a href="#contact" class="nav-btn">Замовити захід</a>
+        </div>
+    </header>
+
+    <!-- Геро-секція -->
+    <section class="hero">
+        <h1>Перетворюємо концепції на <span>масштабні культурні події</span></h1>
+        <p>Повний цикл організації, технічного забезпечення та комплексного маркетингу для концертів, фестивалів, виставок і корпоративних івентів.</p>
+        <a href="#events" class="nav-btn" style="padding: 1rem 2rem; font-size: 1rem;">Дивитись афішу</a>
+    </section>
+
+    <!-- Послуги -->
+    <section id="services" class="services">
+        <h2 class="section-title">Наші можливості</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>Організація під ключ</h3>
+                <p>Розробка концепції, підбір локації, букінг артистів, менеджмент сцени та координація події в день проведення.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📢</div>
+                <h3>Масштабне просування</h3>
+                <p>Таргетована реклама, PR-кампанії у медіа, робота з інфлюенсерами та забезпечення високих показників продажу квитків.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎛️</div>
+                <h3>Технічний продакшн</h3>
+                <p>Професійне звукове, світлове та мультимедійне обладнання. Проєктування та монтаж сценічних конструкцій.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Найближчі події -->
+    <section id="events" class="events">
+        <h2 class="section-title">Найближчі проєкти</h2>
+        <div class="events-grid">
+            <!-- Подія 1 -->
+            <div class="event-card">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop" alt="Концерт" class="event-img">
+                <div class="event-content">
+                    <div class="event-meta">15 Листопада, 2026 • 19:00</div>
+                    <div class="event-title">Ніч Електронної Музики: Rezonance</div>
+                    <div class="event-desc">Масштабний аудіовізуальний перформанс за участю провідних продюсерів та медіа-артистів Європи.</div>
+                    <div class="event-footer">
+                        <span class="event-location">📍 Stereo Plaza, Київ</span>
+                        <button class="ticket-btn" onclick="openBooking('Rezonance')">Квитки</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Подія 2 -->
+            <div class="event-card">
+                <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=600&auto=format&fit=crop" alt="Виставка" class="event-img">
+                <div class="event-content">
+                    <div class="event-meta">02 Грудня, 2026 • 12:00</div>
+                    <div class="event-title">Виставка Сучасного Мистецтва</div>
+                    <div class="event-desc">Експозиція нових робіт українських концептуальних художників, скульпторів та VR-інсталяцій.</div>
+                    <div class="event-footer">
+                        <span class="event-location">📍 М17 Центр, Київ</span>
+                        <button class="ticket-btn" onclick="openBooking('Виставка Сучасного Мистецтва')">Квитки</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Подія 3 -->
+            <div class="event-card">
+                <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=600&auto=format&fit=crop" alt="Фестиваль" class="event-img">
+                <div class="event-content">
+                    <div class="event-meta">24-25 Грудня, 2026</div>
+                    <div class="event-title">Зимовий Акустичний Фестиваль</div>
+                    <div class="event-desc">Затишні акустичні вечори, різдвяний ярмарок локальних брендів та велика фуд-зона.</div>
+                    <div class="event-footer">
+                        <span class="event-location">📍 ВДНГ (Павільйон 1), Київ</span>
+                        <button class="ticket-btn" onclick="openBooking('Зимовий Фестиваль')">Квитки</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма / Зворотний зв'язок -->
+    <section id="contact" class="cta">
+        <div class="cta-container">
+            <h2 class="section-title" style="margin-bottom: 1rem;">Маєте ідею події чи концерту?</h2>
+            <p>Залиште заявку, і наша команда розробить індивідуальну стратегію реалізації та просування вашого івенту.</p>
+            
+            <form class="contact-form" id="eventForm" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Ваше ім'я" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email або Номер телефону" required>
+                </div>
+                <div class="form-group">
+                    <textarea rows="4" placeholder="Розкажіть коротко про ваш захід (формат, очікувана кількість гостей, локація)" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Надіслати запит</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Модальні вікна -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <h4>Дякуємо! Заявку прийнято.</h4>
+            <p>Наш продюсер зв'яжеться з вами протягом 24 годин для обговорення деталей заходу.</p>
+            <button class="close-modal" onclick="closeModal('successModal')">Закрити</button>
+        </div>
+    </div>
+
+    <div class="modal" id="ticketModal">
+        <div class="modal-content">
+            <h4>Бронювання квитків</h4>
+            <p id="ticketModalText">Ви переходите до системи бронювання квитків на захід.</p>
+            <button class="submit-btn" style="width: 100%; margin-bottom: 1rem;" onclick="alert('Перехід на платіжну систему...')">Купити онлайн</button>
+            <button class="close-modal" onclick="closeModal('ticketModal')">Назад</button>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2026 KULTURA Event Agency. Усі права захищено. Створення та просування культурного простору.</p>
+    </footer>
+
+    <script>
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            document.getElementById('successModal').style.display = 'flex';
+            document.getElementById('eventForm').reset();
+        }
+
+        function openBooking(eventName) {
+            document.getElementById('ticketModalText').innerText = 'Ви обрали захід: "' + eventName + '". Оберіть тип квитка для продовження.';
+            document.getElementById('ticketModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Закриття модального вікна при кліку поза ним
+        window.onclick = function(event) {
+            const successModal = document.getElementById('successModal');
+            const ticketModal = document.getElementById('ticketModal');
+            if (event.target == successModal) successModal.style.display = 'none';
+            if (event.target == ticketModal) ticketModal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
